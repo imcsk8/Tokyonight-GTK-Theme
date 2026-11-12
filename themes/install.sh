@@ -29,8 +29,10 @@ SIZE_VARIANTS=('' '-Compact')
 
 if [[ "$(command -v gnome-shell)" ]]; then
 	echo && gnome-shell --version && echo
-	SHELL_VERSION="$(gnome-shell --version | cut -d ' ' -f 3 | cut -d . -f -1)"
-	if [[ "${SHELL_VERSION:-}" -ge "48" ]]; then
+	SHELL_VERSION="$(gnome-shell --version | cut -d ' ' -f 3 | cut -d . -f -1 | sed 's/[^0-9].*//')"
+	if [[ "${SHELL_VERSION:-}" -ge "50" ]]; then
+		GS_VERSION="50-0"
+	elif [[ "${SHELL_VERSION:-}" -ge "48" ]]; then
 		GS_VERSION="48-0"
 	elif [[ "${SHELL_VERSION:-}" -ge "47" ]]; then
 		GS_VERSION="47-0"
@@ -47,7 +49,7 @@ if [[ "$(command -v gnome-shell)" ]]; then
 	fi
 else
 	echo "'gnome-shell' not found, using styles for last gnome-shell version available."
-	GS_VERSION="48-0"
+	GS_VERSION="50-0"
 fi
 
 usage() {
@@ -458,10 +460,10 @@ macos_winbutton() {
 gnome_shell_version() {
 	cp -rf "${SRC_DIR}/sass/gnome-shell/_common.scss" "${SRC_DIR}/sass/gnome-shell/_common-temp.scss"
 
-	sed -i "/\widgets/s/40-0/${GS_VERSION}/" "${SRC_DIR}/sass/gnome-shell/_common-temp.scss"
+	sed -i "/\widgets/s/[0-9]\+-[0-9]\+/${GS_VERSION}/" "${SRC_DIR}/sass/gnome-shell/_common-temp.scss"
 
 	if [[ "${GS_VERSION}" == '3-28' ]]; then
-		sed -i "/\extensions/s/40-0/${GS_VERSION}/" "${SRC_DIR}/sass/gnome-shell/_common-temp.scss"
+		sed -i "/\extensions/s/[0-9]\+-[0-9]\+/${GS_VERSION}/" "${SRC_DIR}/sass/gnome-shell/_common-temp.scss"
 	fi
 }
 

@@ -46,5 +46,5 @@ Clear_theme() {
     done
 }
 
-cd .. && ./install.sh -d $THEME_DIR -t all && ./install.sh -d $THEME_DIR --tweaks solarized -t all
+cd "$THEME_DIR/.." && ./install.sh -d $THEME_DIR -t all && ./install.sh -d $THEME_DIR --tweaks storm -t all && ./install.sh -d $THEME_DIR --tweaks moon -t all
 cd $THEME_DIR && Tar_themes && Clear_theme

@@ -13,7 +13,7 @@
 	background-color: if(
 		$variant == 'light',
 		rgba($white, 0.45),
-		rgba($black, 0.85)
+		$black
 	);
 
 	@if $float == 'true' {
